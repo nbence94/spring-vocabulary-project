@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -41,7 +42,7 @@ public class VocabularyService {
         Optional<Vocabularies> existing = repository.findVocabularyByName(name);
 
         //Check that it's individual
-        if(existing.isPresent() && vocabulary.getId() != existing.get().getId()) {
+        if(existing.isPresent() && !Objects.equals(vocabulary.getId(), existing.get().getId())) {
             return dateTime + " - A(z) " + name + " nevű szótár már létezik!";
         }
 
@@ -51,8 +52,12 @@ public class VocabularyService {
         }
 
         //Success
-        existing.ifPresent(vocabularies -> vocabulary.setCreated(vocabularies.getCreated()));
+        String date = "";
+        existing = repository.findById(vocabulary.getId());
+        if(existing.isPresent()) date = existing.get().getCreated();
+
         vocabulary.setUpdated(dateTime.toString());
+        vocabulary.setCreated(date);
         repository.save(vocabulary);
         return dateTime + " - Sikeresen módosítottad a(z) " + name + " szótárat";
     }
