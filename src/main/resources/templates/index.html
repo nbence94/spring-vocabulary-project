@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Főoldal</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/js/vocabulary.js" th:src="@{js/vocabulary.js}"></script>
+</head>
+<body>
+    <section class="header">
+            <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
+    </section>
+    <div class="vissza">
+        <a href="/">Vissza</a>
+    </div>
+    <section class="main">
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+
+        <div>
+            <div class="rogzites">
+                <span class="btn btn-primary" id="openCreate">Új szótár </span>
+            </div>
+
+            <div align="center">
+                <div class="panel-body" align="center" >
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Azonosító</th>
+                            <th>Megnevezés</th>
+                            <th>Létrehozva</th>
+                            <th>Módosítva</th>
+                            <th style="text-align:center" colspan="2">Műveletek</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="vocabulary : ${vocabulariesList}">
+                            <td th:text="${vocabulary.id}">ID</td>
+                            <td th:text="${vocabulary.name}">Megnevezés</td>
+                            <td th:text="${vocabulary.created}">Szava</td>
+                            <td th:text="${vocabulary.updated}">Játszva</td>
+                            <td> <a href="#" class="btn btn-warning">Szerkesztés</a> </td>
+                            <td> <a th:href="@{/index/delete/(id=${vocabulary.id})}" class="btn btn-danger openDelete">Törlés</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+    </section>
+    <section class="footer">
+
+
+    </section>
+
+
+    <!-- Felvitel MODAL -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Szótár rögzítése</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${vocabulary}" method="post" th:action="@{/create}">
+                        <div class="form-group">
+                            <label for="name" class="col-form-label">Szótár neve:</label>
+                            <input placeholder="Add meg a szótár nevét" type="text" class="form-control" id="name" th:field="*{name}">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Mégse</button>
+                            <button type="submit" class="btn btn-primary">Felvitel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Törlés megerősítése</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Biztosan törölni akarod?</p>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary" href="" id="confirmDelete">Igen</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Nem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

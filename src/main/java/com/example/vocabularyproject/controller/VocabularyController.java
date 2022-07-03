@@ -3,34 +3,34 @@ package com.example.vocabularyproject.controller;
 import com.example.vocabularyproject.model.Vocabularies;
 import com.example.vocabularyproject.service.VocabularyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class VocabularyController {
 
     @Autowired
     VocabularyService vocabularyService;
 
-    @PostMapping("/vocabulary/create")
-    public String createVocabulary(@RequestBody Vocabularies vocabulary) {
-        return vocabularyService.createVocabulary(vocabulary);
+    @RequestMapping("/index")
+    public void getVocabularies(Model model) {
+        model.addAttribute("vocabulariesList", vocabularyService.getAllVocabularies());
+        model.addAttribute("vocabulary", new Vocabularies());
     }
 
-    @PutMapping("/vocabulary/{id}/update")
-    public String updateVocabulary(@RequestBody Vocabularies vocabulary) {
-        return vocabularyService.updateVocabulary(vocabulary);
+    @PostMapping("/index/create")
+    public String createVocabulary(@ModelAttribute Vocabularies vocabularies) {
+        vocabularyService.createVocabulary(vocabularies);
+        return "redirect:/index";
     }
 
-    @DeleteMapping("/vocabulary/{id}/delete")
-    public String deleteVocabulary(@PathVariable Integer id) {
-        return vocabularyService.deleteVocabulary(id);
-    }
-
-    @RequestMapping("/vocabularies")
-    public List<Vocabularies> getVocabularies() {
-        return vocabularyService.getAllVocabularies();
+    @RequestMapping(value="/index/delete", method = {RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.GET})
+    public String deleteVocabulary(Integer id) {
+        vocabularyService.deleteVocabulary(id);
+        return "redirect:/index";
     }
 
 }
