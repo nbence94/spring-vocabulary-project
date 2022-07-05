@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Szótár szerkesztése</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/js/word.js" ></script>
+</head>
+<body>
+    <section class="header">
+            <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
+    </section>
+    <div class="vissza">
+        <a th:href="@{/index}">Vissza</a>
+    </div>
+    <section class="main">
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+
+        <div>
+            <div align="center">
+                <div class="panel-body">
+                    <!-- Ez csak az ID miatt kell -->
+                    <span style="position:absolute; top: -5000px;" th:text="${vocId}" id="vocid"></span>
+
+                    <div aria-labelledby="createModalLabel" aria-hidden="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Fordítsd le a szót</h5>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form th:object="${quizWord}" method="post" th:action="@{'/quiz/' + ${vocId} + '/guess' } ">
+
+                                        <div class="form-group ">
+                                            <span class="col-form-label guessed-word" th:text="*{word1}"></span>
+                                            <input type="hidden" th:field="*{word1}"/>
+                                        </div>
+
+                                        <div class="form-group put-left">
+                                            <label for="hungarian" class="col-form-label"></label>
+                                            <input placeholder="Írd be a szó párját" type="text" class="form-control" id="hungarian" th:field="*{word2}">
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tipp</button>
+                                            <button type="submit" class="btn btn-primary" id="confirmInsert">Megerősít</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+    </section>
+    <section class="footer">
+
+
+    </section>
+
+
+</body>
+</html>

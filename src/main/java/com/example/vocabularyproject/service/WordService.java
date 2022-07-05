@@ -1,6 +1,5 @@
 package com.example.vocabularyproject.service;
 
-import com.example.vocabularyproject.model.Vocabularies;
 import com.example.vocabularyproject.model.Words;
 import com.example.vocabularyproject.repository.VocabularyRepository;
 import com.example.vocabularyproject.repository.WordRepository;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +67,10 @@ public class WordService {
 
         //Success
         repository.save(word);
+
+        //Connected Vocabulary should be updated
+        vocabularyRepository.updateConfirmedAt(word.getVocabularyId(), getDateTime());
+
         return getDateTime() + " - Sikeresen frissítetted a(z) " + word.getHungarian() + " szót";
     }
 
@@ -77,7 +79,15 @@ public class WordService {
             return getDateTime() + " - Nincs ilyen szó!";
         }
 
+        int vocabularyId = 0;
+        if(repository.findById(id).isPresent()) {
+            vocabularyId = repository.findById(id).get().getVocabularyId();
+        }
         repository.deleteById(id);
+
+        //Connected Vocabulary should be updated
+        vocabularyRepository.updateConfirmedAt(vocabularyId, getDateTime());
+
         return getDateTime() + " - Sikeresen törölted a(z) " + id + " azonosítójú szót!";
     }
 
@@ -93,5 +103,10 @@ public class WordService {
 
     private String getDateTime() {
         return LocalDateTime.now().toString();
+    }
+
+    //For Quiz
+    public Words findWordByName(String name) {
+        return repository.findByEnglish(name);
     }
 }

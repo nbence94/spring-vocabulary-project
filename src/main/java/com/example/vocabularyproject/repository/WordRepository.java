@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface WordRepository extends JpaRepository<Words, Integer> {
     List<Words> findAllByVocabularyId(Integer id);
+
+    Words findByEnglish(String name);
 }

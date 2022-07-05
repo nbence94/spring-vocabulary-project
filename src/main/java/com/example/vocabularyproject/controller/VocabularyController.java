@@ -1,7 +1,9 @@
 package com.example.vocabularyproject.controller;
 
+import com.example.vocabularyproject.model.Quiz;
 import com.example.vocabularyproject.model.Vocabularies;
 import com.example.vocabularyproject.model.Words;
+import com.example.vocabularyproject.service.QuizService;
 import com.example.vocabularyproject.service.VocabularyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,9 @@ public class VocabularyController {
 
     @Autowired
     VocabularyService vocabularyService;
+
+    @Autowired
+    QuizService quizService;
 
     @RequestMapping("/index")
     public String getVocabularies(Model model) {
@@ -49,6 +54,21 @@ public class VocabularyController {
 
         //Vocabulary's id also needed
         mav.addObject("vocId", vocabularyId);
+
+        return mav;
+    }
+
+    @RequestMapping("/quiz/{id}")
+    public ModelAndView openQuiz(@PathVariable(name = "id") Integer vocabularyId) {
+        ModelAndView mav = new ModelAndView("quiz");
+
+        mav.addObject("vocId", vocabularyId);
+        mav.addObject("randomWord", quizService.getRandomEnglishWord(vocabularyId));
+
+
+        Quiz quiz = new Quiz();
+        quiz.setWord1(quizService.getRandomEnglishWord(vocabularyId));
+        mav.addObject("quizWord", quiz);
 
         return mav;
     }

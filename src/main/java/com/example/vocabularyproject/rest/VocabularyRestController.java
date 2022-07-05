@@ -1,4 +1,4 @@
-package com.example.vocabularyproject.controller;
+package com.example.vocabularyproject.rest;
 
 import com.example.vocabularyproject.model.Vocabularies;
 import com.example.vocabularyproject.service.VocabularyService;
