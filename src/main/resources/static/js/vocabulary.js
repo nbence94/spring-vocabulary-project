@@ -5,7 +5,6 @@ $(document).ready(function() {
         $('#createModal').modal();
     });
 
-//Most épp azt csinálja, hogy hiába nyomsz rá az Igen gombra, nem történi semmi
     $('.openDelete').on('click',function(event) {
         console.log("Szótár törlése")
         event.preventDefault();

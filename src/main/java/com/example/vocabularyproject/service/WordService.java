@@ -81,6 +81,16 @@ public class WordService {
         return getDateTime() + " - Sikeresen törölted a(z) " + id + " azonosítójú szót!";
     }
 
+    public List<Words> getWordsByVocabulary(Integer vocabularyId) {
+        System.out.println(getDateTime() + " - Szavak lekérdezése.");
+        return repository.findAllByVocabularyId(vocabularyId);
+    }
+
+    public Optional<Words> getWord(Integer id) {
+        System.out.println(getDateTime() + " - " + id + " azonosítójú szó lekérdezése.");
+        return repository.findById(id);
+    }
+
     private String getDateTime() {
         return LocalDateTime.now().toString();
     }

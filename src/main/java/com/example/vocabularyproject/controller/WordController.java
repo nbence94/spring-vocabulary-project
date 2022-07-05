@@ -3,34 +3,49 @@ package com.example.vocabularyproject.controller;
 import com.example.vocabularyproject.model.Words;
 import com.example.vocabularyproject.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController
+@Controller
 public class WordController {
 
     @Autowired
     WordService wordService;
 
-    @GetMapping("/words")
-    public List<Words> getAllWords() {
-        return wordService.getWords();
+    @PostMapping("/vocabulary/{vocabularyId}/add")
+    public String addWord(@ModelAttribute Words word, @PathVariable(name = "vocabularyId") Integer vocabularyId) {
+        word.setVocabularyId(vocabularyId);
+        wordService.addWord(word);
+
+        String url = "vocabulary/" + vocabularyId;
+        return "redirect:/" + url;
     }
 
-    @PostMapping("/word/add")
-    public String addWord(@RequestBody Words word) {
-        return wordService.addWord(word);
+    @RequestMapping(value="/vocabulary/{vocabularyId}/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteWord(Integer id,@PathVariable(name = "vocabularyId") Integer vocabularyId) {
+        wordService.deleteWord(id);
+
+        String url = "vocabulary/" + vocabularyId;
+        return "redirect:/" + url;
     }
 
-    @PutMapping("/word/{id}/update")
-    public String updateWord(@RequestBody Words word) {
-        return wordService.updateWord(word);
+    @GetMapping("/vocabulary/{vocabularyId}/select")
+    @ResponseBody
+    public Optional<Words> getAWord(Integer id) {
+        return wordService.getWord(id);
     }
 
-    @DeleteMapping("/word/{id}/delete")
-    public String deleteWord(@PathVariable Integer id) {
-        return wordService.deleteWord(id);
+    @RequestMapping(value = "/vocabulary/{vocabularyId}/update", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET})
+    public String editHero(Words word, @PathVariable(name ="vocabularyId") Integer vocabularyId) {
+        wordService.updateWord(word);
+
+        String url = "vocabulary/" + vocabularyId;
+        return "redirect:/" + url;
     }
 
 

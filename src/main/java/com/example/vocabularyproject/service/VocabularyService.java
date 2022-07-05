@@ -1,6 +1,7 @@
 package com.example.vocabularyproject.service;
 
 import com.example.vocabularyproject.model.Vocabularies;
+import com.example.vocabularyproject.model.Words;
 import com.example.vocabularyproject.repository.VocabularyRepository;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,22 @@ public class VocabularyService {
 
     public List<Vocabularies> getAllVocabularies() {
         return repository.findAll();
+    }
+
+    public List<Words> getWordsByVocabulary(Integer id) {
+        Optional<Vocabularies> foundVocabulary = repository.findById(id);
+
+        if(foundVocabulary.isPresent()) {
+            Vocabularies vocabulary = foundVocabulary.get();
+            return vocabulary.getWords();
+        }
+
+        return null;
+    }
+
+
+    public Optional<Vocabularies> getVocabularyById(Integer id) {
+        return repository.findById(id);
     }
 
     private String getDateTime() {

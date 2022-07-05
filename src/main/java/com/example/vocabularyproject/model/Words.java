@@ -41,4 +41,15 @@ public class Words {
     public void setVocabularies(Vocabularies vocabularies) {
         this.vocabularies = vocabularies;
     }
+
+    @Override
+    public String toString() {
+        return "Words{" +
+                "id=" + id +
+                ", english='" + english + '\'' +
+                ", hungarian='" + hungarian + '\'' +
+                ", vocabularies=" + vocabularies +
+                ", vocabularyId=" + vocabularyId +
+                '}';
+    }
 }

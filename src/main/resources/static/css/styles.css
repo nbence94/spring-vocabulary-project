@@ -13,7 +13,7 @@
 .header {
     display: flex;
     border-radius: 5px;
-    width: 100vw;
+    width: 99%;
     padding: 10px 20px;
     margin: 5px;
     background-color: rgba(222,248,255, 0.8);

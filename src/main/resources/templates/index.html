@@ -15,7 +15,7 @@
             <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
     </section>
     <div class="vissza">
-        <a href="/">Vissza</a>
+        <a href="/">Home</a>
     </div>
     <section class="main">
         <div class="filler">
@@ -23,7 +23,7 @@
         </div>
 
         <div>
-            <div class="rogzites">
+            <div class="rogzites btn-group">
                 <span class="btn btn-primary" id="openCreate">Új szótár </span>
             </div>
 
@@ -31,23 +31,23 @@
                 <div class="panel-body" align="center" >
                     <table class="table">
                         <thead class="thead-dark">
-                        <tr>
-                            <th>Azonosító</th>
-                            <th>Megnevezés</th>
-                            <th>Létrehozva</th>
-                            <th>Módosítva</th>
-                            <th style="text-align:center" colspan="2">Műveletek</th>
-                        </tr>
+                            <tr>
+                                <th>Azonosító</th>
+                                <th>Megnevezés</th>
+                                <th>Létrehozva</th>
+                                <th>Módosítva</th>
+                                <th style="text-align:center" colspan="2">Műveletek</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr  th:each="vocabulary : ${vocabulariesList}">
-                            <td th:text="${vocabulary.id}">ID</td>
-                            <td th:text="${vocabulary.name}">Megnevezés</td>
-                            <td th:text="${vocabulary.created}">Szava</td>
-                            <td th:text="${vocabulary.updated}">Játszva</td>
-                            <td> <a href="#" class="btn btn-warning">Szerkesztés</a> </td>
-                            <td> <a th:href="@{/index/delete/(id=${vocabulary.id})}" class="btn btn-danger openDelete">Törlés</a> </td>
-                        </tr>
+                            <tr  th:each="vocabulary : ${vocabulariesList}">
+                                <td th:text="${vocabulary.id}">ID</td>
+                                <td th:text="${vocabulary.name}">Megnevezés</td>
+                                <td th:text="${vocabulary.created}">Szava</td>
+                                <td th:text="${vocabulary.updated}">Játszva</td>
+                                <td> <a th:href="@{'/vocabulary/' + ${vocabulary.id}}" class="btn btn-warning">Szavak</a> </td>
+                                <td> <a th:href="@{/index/delete/(id=${vocabulary.id})}" class="btn btn-danger openDelete">Törlés</a> </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -75,7 +75,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:object="${vocabulary}" method="post" th:action="@{/create}">
+                    <form th:object="${vocabulary}" method="post" th:action="@{/index/create}">
                         <div class="form-group">
                             <label for="name" class="col-form-label">Szótár neve:</label>
                             <input placeholder="Add meg a szótár nevét" type="text" class="form-control" id="name" th:field="*{name}">
