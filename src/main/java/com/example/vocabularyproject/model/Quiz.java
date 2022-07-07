@@ -16,6 +16,6 @@ public class Quiz {
 
     private String word1;
     private String word2;
-
+    private Integer score;
 
 }

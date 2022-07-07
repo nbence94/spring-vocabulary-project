@@ -55,6 +55,10 @@ public class QuizService {
         return false;
     }
 
+    public int numOfWords(Integer vocabularyId) {
+        return wordService.getWordsByVocabulary(vocabularyId).size();
+    }
+
 
     private int rndIndex(int max) {
         Random rnd = new Random();
