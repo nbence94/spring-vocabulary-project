@@ -106,7 +106,11 @@ public class WordService {
     }
 
     //For Quiz
-    public Words findWordByName(String name) {
+    public Words findWordByEnglish(String name) {
         return repository.findByEnglish(name);
+    }
+
+    public Words findWordByHungarian(String name) {
+        return repository.findByHungarian(name);
     }
 }

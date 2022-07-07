@@ -15,9 +15,8 @@ public class QuizController {
 
     @PostMapping("/quiz/{vocabularyId}/guess")
     public String guess(@PathVariable(name = "vocabularyId") Integer vocabularyId, Quiz quiz) {
-        System.out.println("Szó: " + quiz.getWord2() + " == " + quiz.getWord1());
 
-        if(quizService.checkWords(quiz.getWord1(), quiz.getWord2())) {
+        if(quizService.checkWords(quiz.getWord1().trim(), quiz.getWord2().trim())) {
             System.out.println("Igen");
         } else {
             System.out.println("Nem");

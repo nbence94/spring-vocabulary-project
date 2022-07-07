@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class VocabularyController {
@@ -65,9 +66,16 @@ public class VocabularyController {
         mav.addObject("vocId", vocabularyId);
         mav.addObject("randomWord", quizService.getRandomEnglishWord(vocabularyId));
 
-
         Quiz quiz = new Quiz();
-        quiz.setWord1(quizService.getRandomEnglishWord(vocabularyId));
+        Random rnd = new Random();
+        int random =  rnd.nextInt(50 - 1) + 1;
+
+        if(random % 2 == 0) {
+            quiz.setWord1(quizService.getRandomEnglishWord(vocabularyId));
+        } else {
+            quiz.setWord1(quizService.getRandomHungarianWord(vocabularyId));
+        }
+
         mav.addObject("quizWord", quiz);
 
         return mav;

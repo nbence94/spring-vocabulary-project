@@ -2,7 +2,6 @@ package com.example.vocabularyproject.service;
 
 import com.example.vocabularyproject.model.Words;
 import com.example.vocabularyproject.repository.VocabularyRepository;
-import com.example.vocabularyproject.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class QuizService {
 
     public String getRandomEnglishWord(Integer vocabularyId) {
         listOfWords = wordService.getWordsByVocabulary(vocabularyId);
-        return listOfWords.get(rndIndex(listOfWords.size())).getHungarian();
+        return listOfWords.get(rndIndex(listOfWords.size())).getEnglish();
     }
 
     public String getRandomHungarianWord(Integer vocabularyId) {
@@ -32,32 +31,34 @@ public class QuizService {
     }
 
     public boolean checkWords(String word1, String word2) {
-        Words guessedWord = wordService.findWordByName(word2);
-
+        Words guessedWord = wordService.findWordByEnglish(word2.trim());
         if(guessedWord == null) {
-            System.out.println("Nincs ilyen szó az adatbázisban: " + word2);
-            return false;
+            guessedWord = wordService.findWordByHungarian(word2);
+
+            if(guessedWord == null) {
+                return false;
+            }
         }
 
+        word1 = word1.toLowerCase();
+        word2 = word2.toLowerCase();
+        String en = guessedWord.getEnglish().toLowerCase();
+        String hun = guessedWord.getHungarian().toLowerCase();
+
         //Check the user had to guess english or hungarian word
-       if(guessedWord.getEnglish().equals(word1)) {
-            if(guessedWord.getHungarian().equals(word2.toLowerCase())) {
-                return true;
-            }
-       } else if(guessedWord.getHungarian().equals(word1)) {
-           if(guessedWord.getEnglish().equals(word2.toLowerCase())) {
-               return true;
-           }
+       if(word1.equals(en)) {
+           return word2.equals(hun);
+       } else if(word1.equals(hun)) {
+           return word2.equals(en);
        }
 
-
-        return true;
+        return false;
     }
 
 
     private int rndIndex(int max) {
         Random rnd = new Random();
-        return rnd.nextInt(max - 1) + 1;
+        return rnd.nextInt(max);
     }
 
 }
