@@ -12,13 +12,9 @@ import java.util.Random;
 public class QuizService {
 
     @Autowired
-    VocabularyRepository vocabularyRepository;
-
-    @Autowired
     WordService wordService;
 
     List<Words> listOfWords;
-
 
     public String getRandomEnglishWord(Integer vocabularyId) {
         listOfWords = wordService.getWordsByVocabulary(vocabularyId);
@@ -55,10 +51,18 @@ public class QuizService {
         return false;
     }
 
-    public int numOfWords(Integer vocabularyId) {
-        return wordService.getWordsByVocabulary(vocabularyId).size();
-    }
+    public String wordPair(String word) {
+        Words guessedWord = wordService.findWordByEnglish(word.trim());
+        if(guessedWord == null) {
+            guessedWord = wordService.findWordByHungarian(word);
 
+            if(guessedWord == null) {
+                return "Nincs találat";
+            }
+        }
+
+        return guessedWord.getEnglish() + " = " + guessedWord.getHungarian();
+    }
 
     private int rndIndex(int max) {
         Random rnd = new Random();

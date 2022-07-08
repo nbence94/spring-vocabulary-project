@@ -21,12 +21,17 @@ public class VocabularyController {
     VocabularyService vocabularyService;
 
     @Autowired
-    QuizService quizService;
+    QuizController quiz;
 
     @RequestMapping("/index")
     public String getVocabularies(Model model) {
         model.addAttribute("vocabulariesList", vocabularyService.getAllVocabularies());
         model.addAttribute("vocabulary", new Vocabularies());
+
+        //If we quit the quiz, set these to 0
+        quiz.setScore(0);
+        quiz.setTurn(0);
+
         return "index";
     }
 
