@@ -64,6 +64,55 @@ public class QuizService {
         return guessedWord.getEnglish() + " = " + guessedWord.getHungarian();
     }
 
+    public String getPair(String word) {
+        Words guessedWord = wordService.findWordByEnglish(word.trim());
+        if(guessedWord == null) {
+            guessedWord = wordService.findWordByHungarian(word);
+
+            if(guessedWord == null) {
+                return "Nincs találat";
+            }
+            return guessedWord.getEnglish();
+        }
+
+        return guessedWord.getHungarian();
+    }
+
+
+    public String giveHint(String word) {
+        Words guessedWord = wordService.findWordByEnglish(word.trim());
+        if(guessedWord != null) {
+            return givePiece(guessedWord.getHungarian());
+        }
+        else {
+            guessedWord = wordService.findWordByHungarian(word.trim());
+
+            if(guessedWord != null) {
+                return givePiece(guessedWord.getEnglish());
+            }
+        }
+
+        return "Nincs találat";
+    }
+
+    private String givePiece(String chosenWord) {
+        StringBuilder result = new StringBuilder();
+
+        Random rnd = new Random();
+
+        for(int i = 0; i < chosenWord.length(); i++) {
+            int chance = rnd.nextInt(50 - 1) + 1;
+
+            if(chance % 2 == 0) {
+                 result.append(chosenWord.charAt(i));
+            } else {
+                result.append("_");
+            }
+        }
+
+        return result.toString();
+    }
+
     private int rndIndex(int max) {
         Random rnd = new Random();
         return rnd.nextInt(max);

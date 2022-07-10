@@ -50,8 +50,8 @@
 
                                         <div class="modal-footer">
                                                 <span class="mr-auto make-bold" th:text="${score} + '/' + ${turn}"></span>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tipp</button>
-                                                <button type="submit" class="btn btn-primary" id="confirmInsert">Megerősít</button>
+                                                <button type="submit" name="submit" class="btn btn-primary" id="confirmInsert">Megerősít</button>
+                                                <button type="submit" name="hint" class="btn btn-secondary" data-dismiss="modal">Tipp</button>
                                         </div>
 
                                     </form>
@@ -60,7 +60,6 @@
                                         <div th:classappend="${'alert alert-' + session.message.type}" role="alert"><span th:text="${session.message.message}"></span></div>
                                     </div>
 
-                                    <th:block th:text="${#session.removeAttribute('message')}"></th:block>
                                 </div>
                             </div>
                         </div>

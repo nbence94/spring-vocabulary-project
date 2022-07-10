@@ -1,9 +1,7 @@
 package com.example.vocabularyproject.controller;
 
-import com.example.vocabularyproject.model.Quiz;
 import com.example.vocabularyproject.model.Vocabularies;
 import com.example.vocabularyproject.model.Words;
-import com.example.vocabularyproject.service.QuizService;
 import com.example.vocabularyproject.service.VocabularyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Random;
 
 @Controller
 public class VocabularyController {
@@ -31,6 +28,7 @@ public class VocabularyController {
         //If we quit the quiz, set these to 0
         quiz.setScore(0);
         quiz.setTurn(0);
+        quiz.setMsgType(-1);
 
         return "index";
     }
