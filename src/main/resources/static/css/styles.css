@@ -111,3 +111,7 @@ button:hover {
     font-size: 30px;
     font-weight: bold;
 }
+
+.number-input {
+    width: 10px;
+}

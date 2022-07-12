@@ -20,6 +20,9 @@ public class VocabularyController {
     @Autowired
     QuizController quiz;
 
+    @Autowired
+    SentenceController sentence;
+
     @RequestMapping("/index")
     public String getVocabularies(Model model) {
         model.addAttribute("vocabulariesList", vocabularyService.getAllVocabularies());
@@ -29,6 +32,8 @@ public class VocabularyController {
         quiz.setScore(0);
         quiz.setTurn(0);
         quiz.setMsgType(-1);
+
+        sentence.setMsgType(-1);
 
         return "index";
     }
