@@ -33,7 +33,9 @@ public class VocabularyController {
         quiz.setTurn(0);
         quiz.setMsgType(-1);
 
+        //If we quit the sentence making, set the to default
         sentence.setMsgType(-1);
+        sentence.setRandomWordList(null);
 
         return "index";
     }

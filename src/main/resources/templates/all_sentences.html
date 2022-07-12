@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Mondatalkotás</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/js/quiz.js" ></script>
+</head>
+<body>
+    <section class="header">
+            <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
+    </section>
+    <div class="vissza">
+        <a th:href="@{/index}">Vissza</a>
+    </div>
+    <section class="main">
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+
+        <div>
+            <div align="center">
+                <div class="panel-body">
+
+
+                    <div aria-labelledby="createModalLabel" aria-hidden="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <form method="post" th:action="@{'/sentences/get' }">
+                                        <div style="display:flex; justify-content: space-around;">
+                                            <input autofocus tabindex="0" placeholder="Hány szót szeretnél?" type="number" class="form-control" name="myAmount" id="amount" size="5">
+                                            <button type="submit" name="hint" class="btn btn-secondary ms-auto">Rendben</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <ul class="list-group" th:each="word : ${wordList}">
+                                        <li class="list-group-item" th:text="*{word.english}"></li>
+                                    </ul>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div th:if="${session.alertMessage}" class="container" id="alert-message">
+                                        <div th:classappend="${'alert alert-' + session.alertMessage.type}" role="alert"><span th:text="${session.alertMessage.message}"></span></div>
+                                    </div>
+
+                                    <!--  Ez azért kell, hogy ne jelenjen meg mindig fölöslegesen az üzenet-->
+                                    <th:block th:text="${#session.removeAttribute('alertMessage')}"></th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="filler">
+            <!-- Ide nem jön majd semmi, ez csak úgy van itt -->
+        </div>
+    </section>
+    <section class="footer">
+
+
+    </section>
+
+
+</body>
+</html>

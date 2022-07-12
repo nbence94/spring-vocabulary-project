@@ -39,6 +39,7 @@ public class SentenceController {
     public ModelAndView openSentence(@PathVariable Integer id, HttpSession session) {
         ModelAndView mav = new ModelAndView("make_sentence");
 
+        //Give values to HTML
         mav.addObject("vocId", id);
         if(randomWordList != null) {
             mav.addObject("wordList", randomWordList);
@@ -52,7 +53,6 @@ public class SentenceController {
 
     @PostMapping("/sentence/{vocabularyId}/get")
     public String getWords(@PathVariable Integer vocabularyId, @RequestParam(value= "myAmount", required = false) Integer amount) {
-        System.err.println("ID:" + vocabularyId + " - Amount:" + amount);
 
             int status = sentenceService.getStatus(vocabularyId, amount, MAX);
 
